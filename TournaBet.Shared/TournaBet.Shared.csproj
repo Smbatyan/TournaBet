@@ -18,4 +18,10 @@
 
 
 
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\Tournabet.Auth.Shared\Tournabet.Auth.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

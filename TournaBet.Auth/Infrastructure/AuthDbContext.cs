@@ -18,8 +18,6 @@ internal class AuthDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasPostgresExtension("uuid-ossp");
-
         modelBuilder.ApplyConfiguration(new UsersEntityConfigurations());
     }
 }

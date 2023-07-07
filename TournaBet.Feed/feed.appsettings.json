@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "db": "Server=lallah.db.elephantsql.com;Database=sehsjehg;Port=5432;User Id=sehsjehg;Password=op8COvu_OEhCy1800Nv0uc9S_NX45jlI;Ssl Mode=VerifyFull;Maximum Pool Size=10;"
+  }
+}
