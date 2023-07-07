@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TournaBet.Auth.Models.Token;
+using TournaBet.Auth.Dto.Request;
+using TournaBet.Auth.Dto.Response;
 using TournaBet.Auth.Services;
 
 namespace TournaBet.Auth.Controllers;
@@ -21,6 +22,15 @@ internal class TokenController : Controller
     public async Task<IActionResult> GetToken([FromBody]CreateTokenRequest createTokenRequest)
     {
         TokenResponse tokenResponse = await _tokenService.GenerateTokenAsync(createTokenRequest);
+
+        return Ok(tokenResponse);
+    }
+    
+    [HttpPost("refresh")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Refresh([FromBody]RefreshTokenRequest tokenRequest)
+    {
+        TokenResponse tokenResponse = await _tokenService.RefreshTokens(tokenRequest.RefreshToken);
 
         return Ok(tokenResponse);
     }

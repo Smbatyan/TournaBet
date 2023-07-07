@@ -1,4 +1,4 @@
-namespace TournaBet.Auth.Models.Token;
+namespace TournaBet.Auth.Dto.Response;
 
 public class TokenResponse
 {

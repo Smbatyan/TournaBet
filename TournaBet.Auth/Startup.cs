@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TournaBet.Auth.Extensions;
+using TournaBet.Auth.Infrastructure;
 using TournaBet.Auth.Options;
+using TournaBet.Auth.Repositories;
+using TournaBet.Auth.Repositories.Abstraction;
 using TournaBet.Auth.Services;
 
 namespace TournaBet.Auth;
@@ -27,8 +31,12 @@ public class Startup : TournaBet.Shared.IStartup
     {
         services.Configure<AuthOptions>(_config.GetSection("Jwt"));
         services.AddAsymmetricJwtAuthentication();
+        
+        services.AddDbContext<AuthDbContext>(options =>
+            options.UseNpgsql(_config.GetConnectionString("db")));
 
         services.AddScoped<TokenService>();
+        services.AddScoped<IAuthRepository, AuthRepository>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

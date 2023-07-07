@@ -6,9 +6,9 @@ using TournaBet.Auth.Options;
 
 namespace TournaBet.Auth.Extensions;
 
-public static class AuthExtension
+internal static class AuthExtension
 {
-    public static IServiceCollection AddAsymmetricJwtAuthentication(
+    internal static IServiceCollection AddAsymmetricJwtAuthentication(
         this IServiceCollection services)
     {
         AuthOptions authOptions = services.BuildServiceProvider()

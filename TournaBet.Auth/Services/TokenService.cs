@@ -3,13 +3,14 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TournaBet.Auth.Models.Token;
+using TournaBet.Auth.Dto.Request;
+using TournaBet.Auth.Dto.Response;
 using TournaBet.Auth.Options;
 using TournaBet.Shared.Models;
 
 namespace TournaBet.Auth.Services;
 
-public class TokenService
+internal class TokenService
 {
     private readonly AuthOptions _authOptions;
 
@@ -18,7 +19,67 @@ public class TokenService
         _authOptions = authOptions.Value;
     }
 
-    private string GenerateAccessTokenAsync(UserEntity user)
+    public async Task<TokenResponse> GenerateTokenAsync(CreateTokenRequest createTokenRequest)
+    {
+        UserEntity user = new()
+        {
+            Id = 1,
+            Username = createTokenRequest.Username
+        };
+
+        TokenResponse tokenResponse = new()
+        {
+            AccessToken = GenerateAccessToken(user),
+            RefreshToken = GenerateRefreshToken(user),
+            UserId = user.Id.ToString(),
+            ExpirationSeconds = 10000
+        };
+
+        return tokenResponse;
+    }
+
+    public async Task<TokenResponse> RefreshTokens(string refreshToken)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var rsaPrivateKey = new RSACryptoServiceProvider();
+        rsaPrivateKey.FromXmlString(_authOptions.PrivateKey);
+
+        var rsaSecurityKey = new RsaSecurityKey(rsaPrivateKey);
+
+        // Validate the refresh token
+        ClaimsPrincipal claimsPrincipal;
+        try
+        {
+            claimsPrincipal = tokenHandler.ValidateToken(refreshToken, new TokenValidationParameters
+            {
+                IssuerSigningKey = rsaSecurityKey,
+                ValidAudience = _authOptions.Audience,
+                ValidIssuer = _authOptions.Issuer,
+                ValidateIssuerSigningKey = true,
+                ValidateAudience = true,
+                ValidateIssuer = true,
+                ValidateLifetime = true
+            }, out _);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Invalid or expired refresh token", ex);
+        }
+
+        string newAccessToken = GenerateAccessToken(new UserEntity() {Id = 1});
+        string newRefreshToken = GenerateRefreshToken(new UserEntity() {Id = 1});
+
+        TokenResponse result = new()
+        {
+            AccessToken = newAccessToken,
+            RefreshToken = newRefreshToken,
+            UserId = 1.ToString()
+        };
+
+        return result;
+    }
+    
+    private string GenerateAccessToken(UserEntity user)
     {
         var rsaPrivateKey = new RSACryptoServiceProvider();
         rsaPrivateKey.FromXmlString(_authOptions.PrivateKey);
@@ -33,8 +94,7 @@ public class TokenService
             issuer: _authOptions.Issuer,
             claims: new Claim[]
             {
-                new("userId", user.Login),
-                new("deviceId", user.Id.ToString()),
+                new("userId", user.Id.ToString()),
                 new("type", "access"),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             },
@@ -73,24 +133,5 @@ public class TokenService
         string refreshToken = new JwtSecurityTokenHandler().WriteToken(jwt);
 
         return refreshToken;
-    }
-
-    public async Task<TokenResponse> GenerateTokenAsync(CreateTokenRequest createTokenRequest)
-    {
-        UserEntity user = new()
-        {
-            Id = 1,
-            Login = createTokenRequest.Login
-        };
-
-        TokenResponse tokenResponse = new()
-        {
-            AccessToken = GenerateAccessTokenAsync(user),
-            RefreshToken = GenerateRefreshToken(user),
-            UserId = user.Id.ToString(),
-            ExpirationSeconds = 10000
-        };
-        
-        return tokenResponse;
     }
 }
