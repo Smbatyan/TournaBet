@@ -1,4 +1,5 @@
 using TournaBet.Shared.Models;
+using TournaBet.Shared.Repository;
 
 namespace TournaBet.Auth.Repositories.Abstraction;
 

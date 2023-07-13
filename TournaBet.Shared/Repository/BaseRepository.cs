@@ -5,12 +5,10 @@ namespace TournaBet.Shared.Repository;
 
 public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 {
-    private readonly DbContext _dbContext;
     private readonly DbSet<T> _dbSet;
 
     public BaseRepository(DbContext dbContext)
     {
-        _dbContext = dbContext;
         _dbSet = dbContext.Set<T>();
     }
 
@@ -34,6 +32,14 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
         var query = _dbSet.AsQueryable();
         query = includes.Aggregate(query, (current, include) => current.Include(include));
         return await query.Where(predicate).ToListAsync();
+    }
+    
+    public async Task<T> FindOneAsync(Expression<Func<T, bool>> predicate,
+        params Expression<Func<T, object>>[] includes)
+    {
+        var query = _dbSet.AsQueryable();
+        query = includes.Aggregate(query, (current, include) => current.Include(include));
+        return await query.FirstOrDefaultAsync(predicate);
     }
 
     public async Task AddAsync(T entity)

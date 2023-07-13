@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using TournaBet.Shared.Repository;
+
+namespace TournaBet.Shared.Repository;
 
 public class UnitOfWork : IUnitOfWork
 {
@@ -32,6 +30,20 @@ public class UnitOfWork : IUnitOfWork
         return await _dbContext.SaveChangesAsync();
     }
 
+    public async Task BeginTransactionAsync()
+    {
+        await _dbContext.Database.BeginTransactionAsync();
+    }
+    
+    public async Task CommitTransactionAsync()
+    {
+        await _dbContext.Database.CommitTransactionAsync();
+    }
+    
+    public async Task RollbackTransactionAsync()
+    {
+        await _dbContext.Database.RollbackTransactionAsync();
+    }
     public void Dispose()
     {
         _dbContext.Dispose();
