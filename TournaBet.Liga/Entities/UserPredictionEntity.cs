@@ -1,6 +1,6 @@
 namespace TournaBet.Liga.Entities;
 
-public class PredictionEntity
+public class UserPredictionEntity
 {
     public int Id { get; set; }
     public int ParticipantId { get; set; }
