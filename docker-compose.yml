@@ -1,0 +1,6 @@
+﻿services:
+  tournabet.host:
+    image: tournabet.host
+    build:
+      context: .
+      dockerfile: Tournabet.Host/Dockerfile

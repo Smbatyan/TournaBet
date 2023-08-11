@@ -19,6 +19,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TournaBet.Auth\TournaBet.Auth.csproj" />
+      <ProjectReference Include="..\TournaBet.Feed\TournaBet.Feed.csproj" />
+      <ProjectReference Include="..\TournaBet.Liga\TournaBet.Liga.csproj" />
       <ProjectReference Include="..\TournaBet.Shared\TournaBet.Shared.csproj" />
     </ItemGroup>
 

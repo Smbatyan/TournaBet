@@ -42,6 +42,8 @@ public class Startup
             // Register a convention allowing to us to prefix routes to modules.
             services.AddTransient<IPostConfigureOptions<MvcOptions>, ModuleRoutingMvcOptionsPostConfigure>();
             services.AddModule<TournaBet.Auth.Startup>("auth/api");
+            services.AddModule<TournaBet.Feed.Startup>("auth/api");
+            services.AddModule<TournaBet.Liga.Startup>("auth/api");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

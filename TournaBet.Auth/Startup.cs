@@ -43,7 +43,7 @@ public class Startup : TournaBet.Shared.IStartup
     {
         app.UseEndpoints(endpoints =>
             endpoints.MapGet("/test",
-                async context => { await context.Response.WriteAsync("Hello World from auth"); }).RequireAuthorization()
+                async context => { await context.Response.WriteAsync("Hello World from auth"); })
         );
 
         app.UseAuthentication();

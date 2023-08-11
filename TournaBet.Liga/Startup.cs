@@ -8,7 +8,7 @@ using TournaBet.Auth.Infrastructure;
 
 namespace TournaBet.Liga;
 
-public class Startup
+public class Startup : Shared.IStartup
 {
     private readonly IConfiguration _config;
 
@@ -16,7 +16,7 @@ public class Startup
     {
         var configBuilder = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("auth.appsettings.json", optional: true)
+            .AddJsonFile("liga.appsettings.json", optional: true)
             .AddEnvironmentVariables();
 
         _config = configBuilder.Build();
@@ -32,8 +32,7 @@ public class Startup
     {
         app.UseEndpoints(endpoints =>
             endpoints.MapGet("/test",
-                async context => { await context.Response.WriteAsync("Hello World from auth"); })
-                .RequireAuthorization()
+                async context => { await context.Response.WriteAsync("Hello World from liga"); })
         );
 
         app.UseAuthentication();
