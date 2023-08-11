@@ -21,4 +21,11 @@
       <ProjectReference Include="..\TournaBet.Shared\TournaBet.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="apprunner.yaml" />
+      <Resource Include="apprunner.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
 </Project>
