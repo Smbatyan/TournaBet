@@ -24,9 +24,6 @@
 
     <ItemGroup>
       <None Remove="apprunner.yaml" />
-      <Resource Include="apprunner.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
     </ItemGroup>
 
     <ItemGroup>

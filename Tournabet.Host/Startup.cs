@@ -4,6 +4,7 @@ using Host.Providers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using TournaBet.Shared.Repository;
 using Module = Host.ModuleIntegration.Module;
 
 namespace Host;
@@ -40,7 +41,6 @@ public class Startup
 
             // Register a convention allowing to us to prefix routes to modules.
             services.AddTransient<IPostConfigureOptions<MvcOptions>, ModuleRoutingMvcOptionsPostConfigure>();
-
             services.AddModule<TournaBet.Auth.Startup>("auth/api");
         }
 
@@ -62,7 +62,7 @@ public class Startup
                 // c.RoutePrefix = string.Empty; // Set the Swagger UI at the root URL
             });
             
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             // Adds endpoints defined in modules
             var modules = app.ApplicationServices.GetRequiredService<IEnumerable<Module>>();

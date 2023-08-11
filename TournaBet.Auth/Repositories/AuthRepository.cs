@@ -7,7 +7,7 @@ namespace TournaBet.Auth.Repositories;
 
 internal class AuthRepository : BaseRepository<PlayerEntity>, IAuthRepository
 {
-    public AuthRepository(IUnitOfWork unitOfWork, AuthDbContext dbContext) : base(dbContext)
+    public AuthRepository(AuthDbContext dbContext) : base(dbContext)
     {
     }
 }
