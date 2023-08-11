@@ -5,7 +5,7 @@ using TournaBet.Shared.Repository;
 
 namespace TournaBet.Auth.Repositories;
 
-internal class AuthRepository : BaseRepository<UserEntity>, IAuthRepository
+internal class AuthRepository : BaseRepository<PlayerEntity>, IAuthRepository
 {
     public AuthRepository(IUnitOfWork unitOfWork, AuthDbContext dbContext) : base(dbContext)
     {

@@ -2,7 +2,7 @@ using TournaBet.Shared.Repository;
 
 namespace TournaBet.Shared.Models;
 
-public class UserEntity : BaseEntity
+public class PlayerEntity : BaseEntity
 {
     public string Username { get; set; }
     public string Email { get; set; }

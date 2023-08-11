@@ -3,7 +3,7 @@ using TournaBet.Shared.Repository;
 
 namespace TournaBet.Auth.Repositories.Abstraction;
 
-public interface IAuthRepository : IBaseRepository<UserEntity>
+public interface IAuthRepository : IBaseRepository<PlayerEntity>
 {
     
 }

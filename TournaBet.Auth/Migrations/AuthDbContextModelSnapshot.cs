@@ -23,7 +23,7 @@ namespace TournaBet.Auth.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "uuid-ossp");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TournaBet.Shared.Models.UserEntity", b =>
+            modelBuilder.Entity("TournaBet.Shared.Models.PlayerEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -21,7 +21,7 @@ internal class TokenService
 
     public async Task<TokenResponse> GenerateTokenAsync(CreateTokenRequest createTokenRequest)
     {
-        UserEntity user = new()
+        PlayerEntity player = new()
         {
             Id = 1,
             Username = createTokenRequest.Username
@@ -29,9 +29,9 @@ internal class TokenService
 
         TokenResponse tokenResponse = new()
         {
-            AccessToken = GenerateAccessToken(user),
-            RefreshToken = GenerateRefreshToken(user),
-            UserId = user.Id.ToString(),
+            AccessToken = GenerateAccessToken(player),
+            RefreshToken = GenerateRefreshToken(player),
+            UserId = player.Id.ToString(),
             ExpirationSeconds = 10000
         };
 
@@ -66,8 +66,8 @@ internal class TokenService
             throw new Exception("Invalid or expired refresh token", ex);
         }
 
-        string newAccessToken = GenerateAccessToken(new UserEntity() {Id = 1});
-        string newRefreshToken = GenerateRefreshToken(new UserEntity() {Id = 1});
+        string newAccessToken = GenerateAccessToken(new PlayerEntity() {Id = 1});
+        string newRefreshToken = GenerateRefreshToken(new PlayerEntity() {Id = 1});
 
         TokenResponse result = new()
         {
@@ -79,7 +79,7 @@ internal class TokenService
         return result;
     }
     
-    private string GenerateAccessToken(UserEntity user)
+    private string GenerateAccessToken(PlayerEntity player)
     {
         var rsaPrivateKey = new RSACryptoServiceProvider();
         rsaPrivateKey.FromXmlString(_authOptions.PrivateKey);
@@ -94,7 +94,7 @@ internal class TokenService
             issuer: _authOptions.Issuer,
             claims: new Claim[]
             {
-                new("userId", user.Id.ToString()),
+                new("userId", player.Id.ToString()),
                 new("type", "access"),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             },
@@ -107,7 +107,7 @@ internal class TokenService
         return jwtToken;
     }
 
-    private string GenerateRefreshToken(UserEntity user)
+    private string GenerateRefreshToken(PlayerEntity player)
     {
         var rsaPrivateKey = new RSACryptoServiceProvider();
         rsaPrivateKey.FromXmlString(_authOptions.PrivateKey);
@@ -122,7 +122,7 @@ internal class TokenService
             issuer: _authOptions.Issuer,
             claims: new Claim[]
             {
-                new("deviceId", user.Id.ToString()),
+                new("deviceId", player.Id.ToString()),
                 new("type", "refresh"),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             },

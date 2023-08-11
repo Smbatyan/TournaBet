@@ -1,12 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using TournaBet.Auth.Infrastructure.EntityConfigurations;
 using TournaBet.Shared.Models;
 
 namespace TournaBet.Auth.Infrastructure;
 
 internal class LigaDbContext : DbContext
 {
-    public DbSet<UserEntity> Users => Set<UserEntity>();
+    public DbSet<PlayerEntity> Users => Set<PlayerEntity>();
 
     public LigaDbContext(DbContextOptions<LigaDbContext> options) : base(options)
     {
@@ -18,6 +17,5 @@ internal class LigaDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new UsersEntityConfigurations());
     }
 }

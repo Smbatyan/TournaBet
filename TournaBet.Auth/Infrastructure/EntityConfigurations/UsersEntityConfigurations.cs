@@ -4,9 +4,9 @@ using TournaBet.Shared.Models;
 
 namespace TournaBet.Auth.Infrastructure.EntityConfigurations;
 
-public class UsersEntityConfigurations : IEntityTypeConfiguration<UserEntity>
+public class UsersEntityConfigurations : IEntityTypeConfiguration<PlayerEntity>
 {
-    public void Configure(EntityTypeBuilder<UserEntity> builder)
+    public void Configure(EntityTypeBuilder<PlayerEntity> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)

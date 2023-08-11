@@ -6,7 +6,7 @@ namespace TournaBet.Auth.Infrastructure;
 
 internal class AuthDbContext : DbContext
 {
-    public DbSet<UserEntity> Users => Set<UserEntity>();
+    public DbSet<PlayerEntity> Users => Set<PlayerEntity>();
 
     public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
     {

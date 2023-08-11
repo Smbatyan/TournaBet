@@ -15,8 +15,8 @@ internal class AuthService : IAuthService
 
     public async Task ValidateUserAsync(int userId)
     {
-        UserEntity user = await _authRepository.GetByIdAsync(userId);
-        if (user == null)
+        PlayerEntity player = await _authRepository.GetByIdAsync(userId);
+        if (player == null)
         {
             throw new Exception("User not found");
         }
