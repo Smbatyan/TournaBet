@@ -1,5 +1,0 @@
-{
-  "ConnectionStrings": {
-    "db": "Server=stampy.db.elephantsql.com;Database=apxkfbne;Port=5432;User Id=apxkfbne;Password=cMkPMJ4yQUC7z9-6Cer7aI2C5xFKznCs;Ssl Mode=VerifyFull;Maximum Pool Size=10;"
-  }
-}

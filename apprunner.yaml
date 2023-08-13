@@ -1,9 +1,0 @@
-version: 1.0
-runtime: dotnet7
-build:
-  commands:
-    - dotnet build -c Release -r linux-x64
-run:
-  command: dotnet build --project Tournabet.Host
-  runtime-version: 7.0.0
-  port: 8080
