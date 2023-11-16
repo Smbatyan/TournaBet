@@ -363,7 +363,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# JetBrains Rider	
+# JetBrains Rider
+src/idea
 .idea/	
 *.sln.iml	
 
